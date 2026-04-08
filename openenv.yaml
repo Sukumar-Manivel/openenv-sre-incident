@@ -1,0 +1,12 @@
+name: "openenv-sre-incident"
+version: "1.0.0"
+description: "A real-world DevOps/SRE environment where an AI must troubleshoot and resolve server outages."
+tags:
+  - openenv
+tasks:
+  - id: "sre-incident-easy"
+    difficulty: "easy"
+  - id: "sre-incident-medium"
+    difficulty: "medium"
+  - id: "sre-incident-hard"
+    difficulty: "hard"
