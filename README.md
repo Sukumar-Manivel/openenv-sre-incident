@@ -22,8 +22,7 @@ The agent must output a strict JSON matching the `Action` Pydantic model:
 2. Install dependencies: `pip install -r requirements.txt`
 3. Export the required environment variables:
    ```bash
-   export API_BASE_URL="https://router.huggingface.co/v1/"
+   export API_BASE_URL="[https://router.huggingface.co/v1/](https://router.huggingface.co/v1/)"
    export MODEL_NAME="Qwen/Qwen2.5-7B-Instruct"
    export HF_TOKEN="your_huggingface_token"
-4. Run the evaluation script:
-   python inference.py
+4. Run the evaluation script: `python inference.py`
