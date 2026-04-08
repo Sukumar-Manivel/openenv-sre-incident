@@ -1,6 +1,7 @@
 from models import Action, Observation
+from openenv.core.env_server import Environment
 
-class SREIncidentEnv:
+class SREIncidentEnv(Environment):
     
     def __init__(
         self, 
@@ -11,6 +12,9 @@ class SREIncidentEnv:
         root_cause_service="none", 
         required_action="none"
     ):
+        # Initialize the base Environment class to get close() and reset_async()
+        super().__init__()
+        
         # Safety fallbacks so the server doesn't crash when OpenEnv boots up
         self.initial_servers = initial_servers if initial_servers is not None else []
         self.initial_telemetry = initial_telemetry if initial_telemetry is not None else {"cpu_usage": 0.0, "memory_usage": 0.0, "active_connections": 0}
