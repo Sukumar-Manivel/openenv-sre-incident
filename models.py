@@ -1,26 +1,24 @@
 from pydantic import BaseModel
-from typing import List, Optional, Literal
-
-class Telemetry(BaseModel):
-    cpu_usage: float
-    memory_usage: float
-    active_connections: int
-
-class ServerState(BaseModel):
-    name: str
-    status: Literal["Online", "Offline", "Error", "High_Latency"]
-    recent_logs: List[str]
-
-class Observation(BaseModel):
-    servers: List[ServerState]
-    telemetry: Telemetry
-    active_alert: Optional[str] = None
-    last_error: Optional[str] = None
+from typing import List, Dict, Any
 
 class Action(BaseModel):
-    action_type: Literal["view_logs", "view_telemetry", "restart_service", "rollback_deployment", "done"]
-    target_service: Optional[str] = None
+    """
+    Defines the action the agent can take.
+    The grader will pass a command string here to try and fix the incident.
+    """
+    command: str
 
-class Reward(BaseModel):
-    value: float
-    reason: str
+class Observation(BaseModel):
+    """
+    Defines the state of the environment at any given time.
+    Includes the required reward, done, and info fields for the OpenEnv grader.
+    """
+    servers: List[Any] = []
+    telemetry: Dict[str, Any] = {"cpu_usage": 0.0, "memory_usage": 0.0, "active_connections": 0}
+    alert: str = "No active alerts"
+    objective: str = "Diagnose incident"
+    
+    # Required by OpenEnv grader during the reset() check
+    reward: float = 0.0
+    done: bool = False
+    info: Dict[str, Any] = {}
