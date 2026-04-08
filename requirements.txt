@@ -1,3 +1,5 @@
-pydantic>=2.0.0
-openai>=1.0.0
-openenv-cli
+openenv-core
+fastapi
+uvicorn
+pydantic
+openai
