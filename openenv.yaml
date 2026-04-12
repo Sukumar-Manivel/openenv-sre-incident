@@ -6,9 +6,7 @@ tags:
 tasks:
   - id: "sre-incident-easy"
     grader: "tasks:SREGrader"
-
   - id: "sre-incident-medium"
     grader: "tasks:SREGrader"
-
   - id: "sre-incident-hard"
     grader: "tasks:SREGrader"
