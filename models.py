@@ -1,16 +1,24 @@
 from pydantic import BaseModel
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 
 # --- Needed for Phase 2 (tasks.py / inference.py) ---
 class Telemetry(BaseModel):
-    cpu_usage: float
-    memory_usage: float
-    active_connections: int
+    cpu_usage: float = 0.0
+    memory_usage: float = 0.0
+    active_connections: int = 0
+    
+    class Config:
+        extra = "allow"  # Prevents crashes from unexpected fields
 
 class ServerState(BaseModel):
-    id: str
-    status: str
-    telemetry: Telemetry
+    id: str = ""
+    name: str = ""
+    status: str = ""
+    recent_logs: List[str] = []
+    telemetry: Optional[Telemetry] = None
+    
+    class Config:
+        extra = "allow"  # Prevents crashes from unexpected fields
 
 # --- Needed for Phase 1 (OpenEnv spec) ---
 class Action(BaseModel):
@@ -25,3 +33,6 @@ class Observation(BaseModel):
     reward: float = 0.0
     done: bool = False
     info: Dict[str, Any] = {}
+    
+    class Config:
+        extra = "allow"
