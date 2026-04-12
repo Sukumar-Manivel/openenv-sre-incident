@@ -5,10 +5,10 @@ tags:
   - openenv
 tasks:
   - id: "sre-incident-easy"
-    grader: "grader:dummy_grader"
+    grader: "tasks:SREGrader"
 
   - id: "sre-incident-medium"
-    grader: "grader:dummy_grader"
+    grader: "tasks:SREGrader"
 
   - id: "sre-incident-hard"
-    grader: "grader:dummy_grader"
+    grader: "tasks:SREGrader"
