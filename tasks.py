@@ -18,23 +18,25 @@ def get_hard_task():
 
 class SREGrader:
     def __call__(self, state) -> float:
-        """
-        Calculates the score and clamps it between 0.01 and 0.99 
-        to satisfy the Scaler validator.
-        """
-        score = 0.5  # Default baseline score
+        # We define a base score that is strictly between 0 and 1
+        score = 0.5 
         
-        # Simple logic: If any server is online, increase score
-        if hasattr(state, 'servers'):
-            online_count = sum(1 for s in state.servers if s.status.lower() == "online")
-            if online_count > 0:
-                score = 0.9  # Set to high success
-            else:
-                score = 0.1  # Set to low failure
-        
-        # THE FIX: This ensures the score is NEVER exactly 0.0 or 1.0
+        try:
+            # If the environment has servers and one is online, we give a high score
+            if hasattr(state, 'servers') and state.servers:
+                online_count = sum(1 for s in state.servers if s.status.lower() == "online")
+                if online_count > 0:
+                    score = 0.95
+                else:
+                    score = 0.05
+        except:
+            # If logic fails, stay at 0.5
+            score = 0.5
+            
+        # THE NUCLEAR SHIELD: This line prevents 0.0 or 1.0 no matter what
         return max(0.01, min(0.99, float(score)))
 
     def grade(self, state) -> float:
+        return self.__call__(state)
         # Some systems call .grade() instead of calling the class directly
         return self.__call__(state)
