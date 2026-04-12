@@ -2,7 +2,7 @@ import os
 import json
 import time
 from openai import OpenAI
-from tasks import get_easy_task, get_medium_task, get_hard_task, grade_easy, grade_medium, grade_hard  # <-- UPDATED IMPORT
+from tasks import get_easy_task, get_medium_task, get_hard_task, SREGrader # <-- Updated Import
 from models import Action
 import http.server
 import socketserver
@@ -17,16 +17,15 @@ if HF_TOKEN is None:
 client = OpenAI(base_url=API_BASE_URL, api_key=HF_TOKEN)
 
 def run_inference():
-    # <-- UPDATED TASK TUPLES
+    grader_instance = SREGrader() # <-- Instantiate the grader
+    
     tasks = [
-        ("sre-incident-easy", get_easy_task(), grade_easy),
-        ("sre-incident-medium", get_medium_task(), grade_medium),
-        ("sre-incident-hard", get_hard_task(), grade_hard)
+        ("sre-incident-easy", get_easy_task(), grader_instance),
+        ("sre-incident-medium", get_medium_task(), grader_instance),
+        ("sre-incident-hard", get_hard_task(), grader_instance)
     ]
     
     benchmark_env_name = "openenv-sre-incident"
-    
-    # ... [Keep the rest of your while loop exactly as it is!] ...
 
     for task_name, env, grader in tasks:
         obs = env.reset()
