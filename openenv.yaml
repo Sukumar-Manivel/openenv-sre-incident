@@ -5,8 +5,13 @@ tags:
   - openenv
 tasks:
   - id: "sre-incident-easy"
-    difficulty: "easy"
+    # ... keep your existing name, description, etc. ...
+    grader: "tasks:grade_easy"    # <-- FORCE IT TO LOOK HERE
+
   - id: "sre-incident-medium"
-    difficulty: "medium"
+    # ... keep your existing name, description, etc. ...
+    grader: "tasks:grade_medium"  # <-- FORCE IT TO LOOK HERE
+
   - id: "sre-incident-hard"
-    difficulty: "hard"
+    # ... keep your existing name, description, etc. ...
+    grader: "tasks:grade_hard"    # <-- FORCE IT TO LOOK HERE
