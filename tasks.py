@@ -40,15 +40,12 @@ def get_hard_task():
 class Grader:
     @staticmethod
     def grade(state) -> float:
-        # Handle both platform dictionary tests and our Pydantic Observation model
         is_fixed = False
         
         if isinstance(state, dict):
-            # If the grader passes a dict during testing
-            is_fixed = state.get("done", False) or state.get("reward", 0.0) > 0 or state.get("state_data", {}).get("fixed", False)
+            # Check if the reward explicitly passed the new 0.9 threshold
+            is_fixed = state.get("reward", 0.0) > 0.9 or state.get("state_data", {}).get("fixed", False)
         else:
-            # If it's the Pydantic Observation model from our environment
-            is_fixed = getattr(state, "done", False) or getattr(state, "reward", 0.0) > 0
+            is_fixed = getattr(state, "reward", 0.0) > 0.9
             
-        # THE FIX: Return 0.99 and 0.01 to satisfy the strictly between (0, 1) rule!
         return 0.99 if is_fixed else 0.01
