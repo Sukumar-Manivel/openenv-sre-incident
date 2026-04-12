@@ -8,7 +8,7 @@ class Telemetry(BaseModel):
     active_connections: int = 0
     
     class Config:
-        extra = "allow"  # Prevents crashes from unexpected fields
+        extra = "allow"
 
 class ServerState(BaseModel):
     id: str = ""
@@ -18,7 +18,7 @@ class ServerState(BaseModel):
     telemetry: Optional[Telemetry] = None
     
     class Config:
-        extra = "allow"  # Prevents crashes from unexpected fields
+        extra = "allow"
 
 # --- Needed for Phase 1 (OpenEnv spec) ---
 class Action(BaseModel):
