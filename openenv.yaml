@@ -6,12 +6,12 @@ tags:
 tasks:
   - id: "sre-incident-easy"
     # ... keep your existing name, description, etc. ...
-    grader: "tasks:grade_easy"    # <-- FORCE IT TO LOOK HERE
+    grader: "tasks:SREGrader"
 
   - id: "sre-incident-medium"
     # ... keep your existing name, description, etc. ...
-    grader: "tasks:grade_medium"  # <-- FORCE IT TO LOOK HERE
+    grader: "tasks:SREGrader"
 
   - id: "sre-incident-hard"
     # ... keep your existing name, description, etc. ...
-    grader: "tasks:grade_hard"    # <-- FORCE IT TO LOOK HERE
+    grader: "tasks:SREGrader"
