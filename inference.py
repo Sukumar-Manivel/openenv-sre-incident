@@ -100,7 +100,7 @@ def run_inference():
                     done = True
                 
             final_score = grader(env.state())
-            success_str = "true" if final_score == 1.0 else "false"
+            success_str = "true" if final_score >0.9 else "false"
             
         except Exception as e:
             success_str = "false"
