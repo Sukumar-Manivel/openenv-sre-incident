@@ -29,9 +29,10 @@ class SREIncidentEnv(Environment):
     def reset(self):
         self.current_step = 0
         self.is_resolved = False
-        return self.state(reward=0.0, done=False, info={"status": "Environment reset."})
+        # THE FIX: Default reward changed from 0.0 to 0.01
+        return self.state(reward=0.01, done=False, info={"status": "Environment reset."})
 
-    def state(self, reward=0.0, done=False, info=None):
+    def state(self, reward=0.01, done=False, info=None):
         if info is None:
             info = {}
         return Observation(
@@ -46,23 +47,26 @@ class SREIncidentEnv(Environment):
 
     def step(self, action: Action):
         self.current_step += 1
-        reward = 0.0
+        reward = 0.01
         done = False
         info = {}
 
         action_str = str(action).lower()
         
         if self.required_action != "none" and self.required_action.lower() in action_str:
-            reward = 1.0  
+            # THE FIX: Winning reward changed from 1.0 to 0.99
+            reward = 0.99  
             done = True
             self.is_resolved = True
             info["status"] = "Incident resolved successfully!"
         elif self.current_step >= self.max_steps:
-            reward = 0.0
+            # THE FIX: Losing reward changed from 0.0 to 0.01
+            reward = 0.01
             done = True
             info["status"] = "Max steps reached."
         else:
-            reward = 0.0
+            # THE FIX: Intermediate step reward changed from 0.0 to 0.01
+            reward = 0.01
             done = False
             info["status"] = "Action executed. Issue persists."
 
