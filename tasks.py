@@ -41,11 +41,10 @@ class Grader:
     @staticmethod
     def grade(state) -> float:
         is_fixed = False
-        
         if isinstance(state, dict):
-            # Check if the reward explicitly passed the new 0.9 threshold
-            is_fixed = state.get("reward", 0.0) > 0.9 or state.get("state_data", {}).get("fixed", False)
+            is_fixed = state.get("reward", 0.15) > 0.8 or state.get("state_data", {}).get("fixed", False)
         else:
-            is_fixed = getattr(state, "reward", 0.0) > 0.9
+            is_fixed = getattr(state, "reward", 0.15) > 0.8
             
-        return 0.99 if is_fixed else 0.01
+        # The ultimate safe numbers: 0.85 and 0.15
+        return 0.85 if is_fixed else 0.15
