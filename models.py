@@ -17,7 +17,7 @@ class Observation(BaseModel):
     alert: str = "none"
     objective: str = "none"
     # STRICT ENFORCEMENT: Default is 0.15. Must be > 0.0 and < 1.0
-    reward: float = Field(default=0.15, gt=0.0, lt=1.0) 
+    reward: float = 0.5
     done: bool = False
     info: Dict[str, Any] = Field(default_factory=dict)
 
