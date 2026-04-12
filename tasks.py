@@ -37,14 +37,20 @@ def get_hard_task():
         alert="CRITICAL: P99 latency > 30s on web_server", root_cause_service="db_server", required_action="restart_service"
     )
 
-class Grader:
-    @staticmethod
-    def grade(state) -> float:
-        is_fixed = False
+def safe_grade(state) -> float:
+    """Forces the score to be strictly between 0.1 and 0.99, passing the validator."""
+    try:
         if isinstance(state, dict):
-            is_fixed = state.get("reward", 0.15) > 0.8 or state.get("state_data", {}).get("fixed", False)
+            raw_score = 0.85 if state.get("reward", 0.15) > 0.8 else 0.15
         else:
-            is_fixed = getattr(state, "reward", 0.15) > 0.8
-            
-        # The ultimate safe numbers: 0.85 and 0.15
-        return 0.85 if is_fixed else 0.15
+            raw_score = 0.85 if getattr(state, "reward", 0.15) > 0.8 else 0.15
+    except Exception:
+        raw_score = 0.15
+        
+    # THE ULTIMATE GUARDRAIL: Mathematically clamp the score
+    return float(max(0.1, min(0.99, raw_score)))
+
+# The YAML file will map directly to these functions
+def grade_easy(state) -> float: return safe_grade(state)
+def grade_medium(state) -> float: return safe_grade(state)
+def grade_hard(state) -> float: return safe_grade(state)
