@@ -28,11 +28,14 @@ class Action(BaseModel):
         extra = "allow"
 
 class Observation(BaseModel):
-    # ONLY include the absolute bare minimum required by OpenEnv
+    # These 7 fields match environment.py EXACTLY!
+    servers: Any = []
+    telemetry: Any = {}
+    alert: Any = ""
+    objective: Any = ""
     reward: float = 0.0
     done: bool = False
     info: Dict[str, Any] = {}
     
-    # Let Pydantic absorb literally any other field the grader throws at it
     class Config:
         extra = "allow"
